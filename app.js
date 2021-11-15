@@ -22,7 +22,13 @@ app.get('/', (req, res) => {
 
 app.get('/rooms', async (req, res) => {
     const rooms = await Room.find({})
-    res.render('index', { rooms })
+    res.render('rooms/index', { rooms })
+})
+
+app.get('/rooms/:id', async (req, res) => {
+    const { id } = req.params
+    const room = await Room.findById(id)
+    res.render('rooms/show', { room })
 })
 
 
