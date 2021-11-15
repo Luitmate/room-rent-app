@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New a location</title>
+  </head>
+  <body>
+    <form action="/rooms" method="post">
+      <div>
+        <label for="newTitle">Add a title</label>
+        <input id="newTitle" type="text" name="room[title]"/>
+      </div>
+      <div>
+        <label for="newLocation">Add a location</label>
+        <input id="newLocation" type="text" name="room[location]" />
+      </div>
+      <button type="submit">Add room</button>
+    </form>
+    <a href="/rooms">Go back to available rooms</a>
+  </body>
+</html>
