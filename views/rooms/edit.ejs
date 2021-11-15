@@ -2,31 +2,31 @@
 <div class="row">
   <h1 class="text-center">Edit Room</h1>
   <div class="col-6 offset-3">
-    <form action="/rooms/<%=room._id%>?_method=PUT" method="post">
+    <form action="/rooms/<%=room._id%>?_method=PUT" method="post" novalidate class="needs-validation">
       <div class="mb-3">
         <label class="form-label"  for="newTitle">Add a title</label>
-        <input class="form-control" id="newTitle" type="text" name="room[title]" value="<%= room.title %>"/>
+        <input class="form-control" id="newTitle" type="text" name="room[title]" value="<%= room.title %>" required/>
       </div>
       <div class="mb-3">
         <label class="form-label" for="newLocation">Add a location</label>
-        <input class="form-control" id="newLocation" type="text" name="room[location]" value="<%= room.location %>"/>
+        <input class="form-control" id="newLocation" type="text" name="room[location]" value="<%= room.location %>" required/>
       </div>
       <div class="mb-3">
       <div class="mb-3">
         <label class="form-label" for="newImage">Image URL</label>
-        <input class="form-control" id="newImage" type="text" name="room[image]" value="<%= room.image %>" />
+        <input class="form-control" id="newImage" type="text" name="room[image]" value="<%= room.image %>" required/>
       </div>
       <div class="mb-3">
         <label class="form-label" for="newPrice">Add price</label>
         <div class="input-group">
           <span class="input-group-text" id="newPrice">$</span>
-          <input type="text" class="form-control" id="newPrice" aria-label="Amount (to the nearest dollar)" name="room[price]" value="<%= room.price %>">
+          <input type="text" class="form-control" id="newPrice" aria-label="Amount (to the nearest dollar)" name="room[price]" value="<%= room.price %>" required>
           <span class="input-group-text">.00</span>
         </div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="newDescription">Description</label>
-        <textarea class="form-control" id="newDescription" type="text" name="room[description]" ><%= room.description %></textarea>
+        <textarea class="form-control" id="newDescription" type="text" name="room[description]" requried><%= room.description %></textarea>
       </div>
 
       <div class="mb-3">
