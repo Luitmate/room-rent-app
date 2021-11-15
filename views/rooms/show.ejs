@@ -2,6 +2,9 @@
     <h1><%= room.title %> </h1>
     <h2><%= room.location %> </h2>
     <p><a href="/rooms/<%= room._id %>/edit">Edit</a></p>
+    <img src="<%= room.image %>" alt="A room">
+    <p> <%= room.description %> </p>
+    <p><%= room.price %> </p>
     <p>
         <form action="/rooms/<%= room._id %>?_method=delete" method="post">
             <button>Delete room</button>
