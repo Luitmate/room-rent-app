@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit a location</title>
+  </head>
+  <body>
+    <form action="/rooms/<%= room._id %>?_method=put" method="post">
+      <div>
+        <label for="newTitle">Edit title</label>
+        <input id="newTitle" type="text" name="room[title]" value="<%= room.title %>"/>
+      </div>
+      <div>
+        <label for="newLocation">Edit location</label>
+        <input id="newLocation" type="text" name="room[location]" value="<%= room.location %> " />
+      </div>
+      <button type="submit">Edit room</button>
+    </form>
+    <a href="/rooms/<%= room._id %>">Go back to room</a>
+  </body>
+</html>
