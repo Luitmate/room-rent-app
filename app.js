@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const engine = require('ejs-mate')
 
 const methodOverride = require('method-override')
 
@@ -14,6 +15,8 @@ async function main() {
 
 const app = express()
 
+// EJS-MATE CONFIG
+app.engine('ejs', engine)
 // EJS CONFIG
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
