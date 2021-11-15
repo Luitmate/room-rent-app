@@ -1,13 +1,38 @@
-<% layout('layouts/boilerplate') %> 
+<% layout('/layouts/boilerplate') %>
+<div class="row">
+  <h1 class="text-center">New Room</h1>
+  <div class="col-6 offset-3">
     <form action="/rooms" method="post">
-      <div>
-        <label for="newTitle">Add a title</label>
-        <input id="newTitle" type="text" name="room[title]"/>
+      <div class="mb-3">
+        <label class="form-label"  for="newTitle">Add a title</label>
+        <input class="form-control" id="newTitle" type="text" name="room[title]" />
       </div>
-      <div>
-        <label for="newLocation">Add a location</label>
-        <input id="newLocation" type="text" name="room[location]" />
+      <div class="mb-3">
+        <label class="form-label" for="newLocation">Add a location</label>
+        <input class="form-control" id="newLocation" type="text" name="room[location]" />
       </div>
-      <button type="submit">Add room</button>
+      <div class="mb-3">
+      <div class="mb-3">
+        <label class="form-label" for="newImage">Image URL</label>
+        <input class="form-control" id="newImage" type="text" name="room[image]" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="newPrice">Add price</label>
+        <div class="input-group">
+          <span class="input-group-text" id="newPrice">$</span>
+          <input type="text" class="form-control" id="newPrice" aria-label="Amount (to the nearest dollar)" name="room[price]">
+          <span class="input-group-text">.00</span>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="newDescription">Description</label>
+        <textarea class="form-control" id="newDescription" type="text" name="room[description]"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <button class="btn btn-success">Add room</button>
+      </div>
     </form>
     <a href="/rooms">Go back to available rooms</a>
+  </div>
+</div>
