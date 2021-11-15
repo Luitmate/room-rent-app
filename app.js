@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const engine = require('ejs-mate')
+const {roomSchema} = require('./schemas')
 const ExpressError = require('./utils/ExpressError')
 const catchAsync = require('./utils/catchAsync')
 
@@ -29,6 +30,16 @@ app.use(express.urlencoded({ extended: true }))
 //METHOD OVERRIDE
 app.use(methodOverride('_method'))
 
+const validateRoom = (req, res, next) => {
+    const { error } = roomSchema.validate(req.body)
+    if(error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    }else {
+        next();
+    }
+}
+
 app.get('/', (req, res) => {
     res.render('home')
 })
@@ -42,7 +53,7 @@ app.get('/rooms/new', (req, res) => {
     res.render('rooms/new')
 })
 
-app.post('/rooms', catchAsync(async (req, res) => {
+app.post('/rooms', validateRoom, catchAsync(async (req, res) => {
     const room = new Room(req.body.room);
     await room.save()
     res.redirect(`/rooms/${room._id}`)
@@ -60,7 +71,7 @@ app.get('/rooms/:id/edit', catchAsync(async (req, res) => {
     res.render('rooms/edit', { room })
 }))
 
-app.put('/rooms/:id', catchAsync(async (req, res) => {
+app.put('/rooms/:id', validateRoom, catchAsync(async (req, res) => {
     const { id } = req.params
     const room = await Room.findByIdAndUpdate(id, {... req.body.room })
     res.redirect(`/rooms/${room._id}`)
