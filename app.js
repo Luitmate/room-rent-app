@@ -63,6 +63,12 @@ app.put('/rooms/:id', async (req, res) => {
     res.redirect(`/rooms/${room._id}`)
 })
 
+app.delete('/rooms/:id', async (req, res) => {
+    const { id } = req.params
+    await Room.findByIdAndDelete(id)
+    res.redirect('/rooms')
+})
+
 
 
 app.listen(3000, (req, res) => {
