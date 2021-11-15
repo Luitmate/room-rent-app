@@ -1,16 +1,31 @@
-<% layout('layouts/boilerplate') %> 
-    <h1><%= room.title %> </h1>
-    <h2><%= room.location %> </h2>
-    <p><a href="/rooms/<%= room._id %>/edit">Edit</a></p>
-    <img src="<%= room.image %>" alt="A room">
-    <p> <%= room.description %> </p>
-    <p><%= room.price %> </p>
-    <p>
-        <form action="/rooms/<%= room._id %>?_method=delete" method="post">
-            <button>Delete room</button>
+<% layout('/layouts/boilerplate') %>
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="card mb-3" style="width: 18rem">
+      <img src="<%= room.image %>" class="card-img-top" alt="A room" />
+      <div class="card-body">
+        <h5 class="card-title"><%= room.title %></h5>
+        <p class="card-text"><%= room.description %></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted"><%= room.location %></li>
+        <li class="list-group-item">$<%= room.price %>/night</li>
+      </ul>
+      <div class="card-body">
+        <a class="card-link btn btn-warning" href="/rooms/<%=room._id%>/edit"
+          >Edit room</a
+        >
+        <form
+          class="d-inline"
+          action="/rooms/<%= room._id %>?_method=DELETE"
+          method="post"
+        >
+          <button class="btn btn-danger">Delete</button>
         </form>
-    </p>
-    <footer>
-        <a href="/rooms">All rooms</a>
-    </footer>
-
+      </div>
+      <div class="card-footer text muted">
+          5 days ago
+      </div>
+    </div>
+  </div>
+</div>
