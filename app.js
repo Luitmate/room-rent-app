@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path')
 const engine = require('ejs-mate')
+const ExpressError = require('./utils/ExpressError')
+const catchAsync = require('./utils/catchAsync')
 
 const ExpressError = require('./utils/ExpressError')
 const catchAsync = require('./utils/catchAsync')
@@ -72,6 +74,7 @@ app.delete('/rooms/:id', catchAsync(async (req, res) => {
     await Room.findByIdAndDelete(id)
     res.redirect('/rooms')
 }))
+<<<<<<< HEAD
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not found!', 404))
@@ -83,6 +86,11 @@ app.use((err, req, res, next) => {
         err.message = 'Something went wrong'
     }
     res.status(statusCode).render('error', { err })
+=======
+
+app.use((err, req, res, next) => {
+    res.send('Something went wrong!')
+>>>>>>> d2fc601dfaea09d255c4e090e8609d47e80f91f3
 })
 
 
