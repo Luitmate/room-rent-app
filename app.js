@@ -4,9 +4,6 @@ const engine = require('ejs-mate')
 const ExpressError = require('./utils/ExpressError')
 const catchAsync = require('./utils/catchAsync')
 
-const ExpressError = require('./utils/ExpressError')
-const catchAsync = require('./utils/catchAsync')
-
 const methodOverride = require('method-override')
 
 const mongoose = require('mongoose')
