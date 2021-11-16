@@ -72,7 +72,7 @@ app.post('/rooms', validateRoom, catchAsync(async (req, res) => {
 
 app.get('/rooms/:id', catchAsync(async (req, res) => {
     const { id } = req.params
-    const room = await Room.findById(id)
+    const room = await Room.findById(id).populate('reviews')
     res.render('rooms/show', { room })
 }))
 
