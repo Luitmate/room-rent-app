@@ -1,7 +1,7 @@
 <% layout('/layouts/boilerplate') %>
 <div class="row">
-  <div class="col-6 offset-3">
-    <div class="card mb-3" style="width: 18rem">
+  <div class="col-6">
+    <div class="card mb-3">
       <img src="<%= room.image %>" class="card-img-top" alt="A room" />
       <div class="card-body">
         <h5 class="card-title"><%= room.title %></h5>
@@ -23,27 +23,48 @@
           <button class="btn btn-danger">Delete</button>
         </form>
       </div>
-      <div class="card-footer text muted">
-          5 days ago
-      </div>
+      <div class="card-footer text muted">5 days ago</div>
     </div>
+  </div>
+  <div class="col-6">
     <h2>Make a review</h2>
-    <form class="mb-3 needs-validation" action="/rooms/<%= room._id %>/reviews " method="post" novalidate> 
+    <form
+      class="mb-3 needs-validation"
+      action="/rooms/<%= room._id %>/reviews"
+      method="post"
+      novalidate
+    >
       <div class="mb-3">
         <label class="form-label" for="rating"></label>
-        <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
+        <input
+          class="form-range"
+          type="range"
+          min="1"
+          max="5"
+          name="review[rating]"
+          id="rating"
+        />
       </div>
       <div class="mb-3">
         <label class="form-label" for="body">Review</label>
-        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="4" required></textarea>
+        <textarea
+          class="form-control"
+          name="review[body]"
+          id="body"
+          cols="30"
+          rows="4"
+          required
+        ></textarea>
       </div>
       <button class="btn btn-success">Submit</button>
     </form>
     <% for(let review of room.reviews) { %>
-      <div class="mb-4">
-        <p>Rating: <%= review.rating %> </p>
-        <p>Review: <%= review.body %> </p>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Rating: <%= review.rating %></h5>
+        <p class="card-text">Review: <%= review.body %></p>
       </div>
-    <% } %> 
+    </div>
+    <% } %>
   </div>
 </div>
