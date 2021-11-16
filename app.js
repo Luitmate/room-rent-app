@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const engine = require('ejs-mate')
-const {roomSchema} = require('./schemas')
+const {roomSchema, reviewSchema} = require('./schemas')
 const ExpressError = require('./utils/ExpressError')
 const catchAsync = require('./utils/catchAsync')
 
@@ -38,6 +38,16 @@ const validateRoom = (req, res, next) => {
         throw new ExpressError(msg, 400)
     }else {
         next();
+    }
+}
+
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body)
+    if(error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    }else {
+        next()
     }
 }
 
@@ -78,7 +88,7 @@ app.put('/rooms/:id', validateRoom, catchAsync(async (req, res) => {
     res.redirect(`/rooms/${room._id}`)
 }))
 
-app.delete('/rooms/:id', catchAsync(async (req, res) => {
+app.delete('/rooms/:id', validateReview, catchAsync(async (req, res) => {
     const { id } = req.params
     await Room.findByIdAndDelete(id)
     res.redirect('/rooms')
@@ -91,7 +101,7 @@ app.post('/rooms/:id/reviews', catchAsync(async(req, res) => {
     await review.save()
     await room.save()
     res.redirect(`/rooms/${room._id}`)
-})) 
+}))
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not found!', 404))
