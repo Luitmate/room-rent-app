@@ -88,13 +88,13 @@ app.put('/rooms/:id', validateRoom, catchAsync(async (req, res) => {
     res.redirect(`/rooms/${room._id}`)
 }))
 
-app.delete('/rooms/:id', validateReview, catchAsync(async (req, res) => {
+app.delete('/rooms/:id', catchAsync(async (req, res) => {
     const { id } = req.params
     await Room.findByIdAndDelete(id)
     res.redirect('/rooms')
 }))
 
-app.post('/rooms/:id/reviews', catchAsync(async(req, res) => {
+app.post('/rooms/:id/reviews', validateReview, catchAsync(async(req, res) => {
     const room = await Room.findById(req.params.id)
     const review = new Review(req.body.review)
     room.reviews.push(review)
