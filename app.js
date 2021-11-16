@@ -9,6 +9,7 @@ const methodOverride = require('method-override')
 
 const mongoose = require('mongoose')
 const Room = require('./models/room')
+const Review = require('./models/review')
 
 main().catch(err => console.log(err));
 
@@ -82,6 +83,15 @@ app.delete('/rooms/:id', catchAsync(async (req, res) => {
     await Room.findByIdAndDelete(id)
     res.redirect('/rooms')
 }))
+
+app.post('/rooms/:id/reviews', catchAsync(async(req, res) => {
+    const room = await Room.findById(req.params.id)
+    const review = new Review(req.body.review)
+    room.reviews.push(review)
+    await review.save()
+    await room.save()
+    res.redirect(`/rooms/${room._id}`)
+})) 
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not found!', 404))
