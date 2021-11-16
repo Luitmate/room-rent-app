@@ -31,6 +31,8 @@ app.use(express.urlencoded({ extended: true }))
 //METHOD OVERRIDE
 app.use(methodOverride('_method'))
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 
 app.use('/rooms', rooms)
 app.use('/rooms/:id/reviews', reviews)
