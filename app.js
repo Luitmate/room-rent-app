@@ -103,6 +103,13 @@ app.post('/rooms/:id/reviews', catchAsync(async(req, res) => {
     res.redirect(`/rooms/${room._id}`)
 }))
 
+app.delete('/rooms/:id/reviews/:reviewId', catchAsync(async(req, res) => {
+    const { id, reviewId } = req.params
+    await Room.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
+    await Room.findByIdAndDelete(reviewId)
+    res.redirect(`/rooms/${id}`)
+}))
+
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not found!', 404))
 })
