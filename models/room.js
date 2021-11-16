@@ -7,7 +7,11 @@ const RoomSchema = new Schema({
     price: Number,
     description: String,
     image: String,
-    location: String
+    location: String,
+    review: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+    }]
 })
 
 module.exports = mongoose.model('Room', RoomSchema)
