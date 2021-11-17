@@ -34,24 +34,34 @@ router.post('/', validateRoom, catchAsync(async (req, res) => {
 router.get('/:id', catchAsync(async (req, res) => {
     const { id } = req.params
     const room = await Room.findById(id).populate('reviews')
+    if(!room) {
+        req.flash('error', 'Cannot find that room!')
+        return res.redirect('/rooms')
+    }
     res.render('rooms/show', { room })
 }))
 
 router.get('/:id/edit', catchAsync(async (req, res) => {
     const { id } = req.params
     const room = await Room.findById(id)
+    if(!room) {
+        req.flash('error', 'Cannot find that room!')
+        return res.redirect('/rooms')
+    }
     res.render('rooms/edit', { room })
 }))
 
 router.put('/:id', validateRoom, catchAsync(async (req, res) => {
     const { id } = req.params
     const room = await Room.findByIdAndUpdate(id, {... req.body.room })
+    req.flash('success', 'Successfully updated room')
     res.redirect(`/rooms/${room._id}`)
 }))
 
 router.delete('/:id', catchAsync(async (req, res) => {
     const { id } = req.params
     await Room.findByIdAndDelete(id)
+    req.flash('success', 'Successfully deleted room')
     res.redirect('/rooms')
 }))
 
