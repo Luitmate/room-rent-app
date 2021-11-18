@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {roomSchema} = require('../schemas')
+const {isLoggedIn} = require('../middleware')
 
 const ExpressError = require('../utils/ExpressError')
 const catchAsync = require('../utils/catchAsync')
@@ -21,11 +22,11 @@ router.get('/', catchAsync(async (req, res) => {
     res.render('rooms/index', { rooms })
 }))
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('rooms/new')
 })
 
-router.post('/', validateRoom, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, validateRoom, catchAsync(async (req, res) => {
     const room = new Room(req.body.room);
     await room.save()
     res.redirect(`/rooms/${room._id}`)
@@ -41,7 +42,7 @@ router.get('/:id', catchAsync(async (req, res) => {
     res.render('rooms/show', { room })
 }))
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params
     const room = await Room.findById(id)
     if(!room) {
@@ -51,7 +52,7 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
     res.render('rooms/edit', { room })
 }))
 
-router.put('/:id', validateRoom, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, validateRoom, catchAsync(async (req, res) => {
     const { id } = req.params
     const room = await Room.findByIdAndUpdate(id, {... req.body.room })
     req.flash('success', 'Successfully updated room')
