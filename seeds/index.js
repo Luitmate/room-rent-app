@@ -20,6 +20,7 @@ const seedDB = async () => {
       const random1000 = Math.floor((Math.random() * 1000))
       const priceRandom = Math.floor(Math.random() * 25) + 5; 
       const room = new Room({
+          author: '619666f125892c1a57902157',
           title: `${titleSample(places)} ${titleSample(descriptors)}`,
           image: 'https://source.unsplash.com/collection/9748079',
           location: `${cities[random1000].city}, ${cities[random1000].state}`,

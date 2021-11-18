@@ -9,6 +9,7 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item text-muted"><%= room.location %></li>
+        <li class="list-group-item">Submitted by <%= room.author.username %></li>
         <li class="list-group-item">$<%= room.price %>/night</li>
       </ul>
       <div class="card-body">
