@@ -12,8 +12,9 @@ const ExpressError = require('./utils/ExpressError')
 const methodOverride = require('method-override')
 
 //ROUTES
-const rooms = require('./routes/rooms')
-const reviews = require('./routes/reviews')
+const roomsRoutes = require('./routes/rooms')
+const reviewsRoutes = require('./routes/reviews')
+const userRoutes = require('./routes/users')
 
 
 main().catch(err => console.log(err));
@@ -68,8 +69,9 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/rooms', rooms)
-app.use('/rooms/:id/reviews', reviews)
+app.use('/rooms', roomsRoutes)
+app.use('/rooms/:id/reviews', reviewsRoutes)
+app.use('/', userRoutes)
 
 app.get('/', (req, res) => {
     res.render('home')
