@@ -1,21 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const {roomSchema} = require('../schemas')
-const {isLoggedIn} = require('../middleware')
 
-const ExpressError = require('../utils/ExpressError')
+const {isLoggedIn, validateRoom, isAuthor} = require('../middleware')
+
 const catchAsync = require('../utils/catchAsync')
 const Room = require('../models/room')
 
-const validateRoom = (req, res, next) => {
-    const { error } = roomSchema.validate(req.body)
-    if(error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    }else {
-        next();
-    }
-}
 
 router.get('/', catchAsync(async (req, res) => {
     const rooms = await Room.find({})
@@ -43,7 +33,7 @@ router.get('/:id', catchAsync(async (req, res) => {
     res.render('rooms/show', { room })
 }))
 
-router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params
     const room = await Room.findById(id)
     if(!room) {
@@ -60,7 +50,7 @@ router.put('/:id', isLoggedIn, validateRoom, catchAsync(async (req, res) => {
     res.redirect(`/rooms/${room._id}`)
 }))
 
-router.delete('/:id', catchAsync(async (req, res) => {
+router.delete('/:id', isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params
     await Room.findByIdAndDelete(id)
     req.flash('success', 'Successfully deleted room')
