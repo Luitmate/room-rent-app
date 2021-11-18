@@ -9,18 +9,17 @@ const catchAsync = require('../utils/catchAsync')
 const Room = require('../models/room')
 
 
-router.get('/', catchAsync(rooms.index))
+router.route('/')
+    .get(catchAsync(rooms.index))
+    .post(isLoggedIn, validateRoom, catchAsync(rooms.createRoom))
 
 router.get('/new', isLoggedIn, rooms.renderNewForm)
 
-router.post('/', isLoggedIn, validateRoom, catchAsync(rooms.createRoom))
-
-router.get('/:id', catchAsync(rooms.showRoom))
+router.route('/:id')
+    .get(catchAsync(rooms.showRoom))
+    .put(isLoggedIn, validateRoom, catchAsync(rooms.updateRoom))
+    .delete(isAuthor, catchAsync(rooms.deleteRoom))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(rooms.renderEditForm))
-
-router.put('/:id', isLoggedIn, validateRoom, catchAsync(rooms.updateRoom))
-
-router.delete('/:id', isAuthor, catchAsync(rooms.deleteRoom))
 
 module.exports = router
