@@ -25,7 +25,12 @@ router.post('/', isLoggedIn, validateRoom, catchAsync(async (req, res) => {
 
 router.get('/:id', catchAsync(async (req, res) => {
     const { id } = req.params
-    const room = await Room.findById(id).populate('reviews').populate('author')
+    const room = await Room.findById(id).populate({
+        path: 'reviews',
+        populate: {
+            path: 'author'
+        }
+    }).populate('author')
     if(!room) {
         req.flash('error', 'Cannot find that room!')
         return res.redirect('/rooms')
