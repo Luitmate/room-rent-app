@@ -6,7 +6,7 @@ const RoomSchema = new Schema({
     title: String,
     price: Number,
     description: String,
-    image: [
+    images: [
         {
             url: String,
             filename: String
