@@ -22,10 +22,19 @@ const seedDB = async () => {
       const room = new Room({
           author: '619666f125892c1a57902157',
           title: `${titleSample(places)} ${titleSample(descriptors)}`,
-          image: 'https://source.unsplash.com/collection/9748079',
           location: `${cities[random1000].city}, ${cities[random1000].state}`,
           description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quisquam ducimus, veritatis cum tempora, fugit sit iste nam ratione facere',
-          price: priceRandom
+          price: priceRandom,
+          images: [
+            {
+              url: 'https://res.cloudinary.com/dmfmgkkf3/image/upload/v1637326349/rooms/obfixunbp0dwsu9u8ptn.jpg',
+              filename: 'roomPictures/vix09etd4cvlmi9gjvh2',
+            },
+            {
+              url: 'https://res.cloudinary.com/dmfmgkkf3/image/upload/v1637326350/rooms/vngj8oc4evypjinqr7yi.jpg',
+              filename: 'roomPictures/x7rbwdrbz3tarvfqbci8',
+            }
+          ]
       })
       await room.save()
   }
