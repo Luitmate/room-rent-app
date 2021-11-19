@@ -46,6 +46,9 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateRoom = async (req, res) => {
     const { id } = req.params
     const room = await Room.findByIdAndUpdate(id, {...req.body.room})
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }))
+    room.images.push(...imgs)
+    await room.save()
     req.flash('success', 'Successfully updated room')
     res.redirect(`/rooms/${room._id}`)
 }

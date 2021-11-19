@@ -20,7 +20,7 @@ router.get('/new', isLoggedIn, rooms.renderNewForm)
 
 router.route('/:id')
     .get(catchAsync(rooms.showRoom))
-    .put(isLoggedIn, validateRoom, catchAsync(rooms.updateRoom))
+    .put(isLoggedIn, upload.array('image'), validateRoom, catchAsync(rooms.updateRoom))
     .delete(isAuthor, catchAsync(rooms.deleteRoom))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(rooms.renderEditForm))
