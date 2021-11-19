@@ -8,4 +8,10 @@ mapboxgl.accessToken = mapToken;
 
 new mapboxgl.Marker()
     .setLngLat(room.geometry.coordinates)
+    .setPopup(
+        new mapboxgl.Popup({offset: 25})
+        .setHTML(
+            `<h3>${room.title}</h3>`
+        )
+    )
     .addTo(map)
