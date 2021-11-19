@@ -14,12 +14,8 @@ const upload = multer({ storage })
 
 router.route('/')
     .get(catchAsync(rooms.index))
-    // .post(isLoggedIn, validateRoom, catchAsync(rooms.createRoom))
-    .post(upload.array('image'), (req, res) => {
-        console.log(req.body, req.files)
-        res.send('look the console')
-    }) 
-
+    .post(isLoggedIn, upload.array('image'), validateRoom, catchAsync(rooms.createRoom))
+    
 router.get('/new', isLoggedIn, rooms.renderNewForm)
 
 router.route('/:id')

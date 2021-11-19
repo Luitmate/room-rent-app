@@ -11,8 +11,10 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createRoom = async (req, res, next) => {
     const room = new Room(req.body.room)
+    room.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
     room.author = req.user._id
     await room.save()
+    console.log(`Aqui esta tu room ${room}`)
     req.flash('success', 'Successfully made a new room!')
     res.redirect(`/rooms/${room._id}`)
 }
