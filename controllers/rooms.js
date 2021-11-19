@@ -1,4 +1,5 @@
 const Room = require('../models/room')
+const { cloudinary } = require('../cloudinary')
 
 module.exports.index = async (req, res) => {
     const rooms = await Room.find({})
@@ -45,10 +46,17 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateRoom = async (req, res) => {
     const { id } = req.params
+    console.log(req.body)
     const room = await Room.findByIdAndUpdate(id, {...req.body.room})
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }))
     room.images.push(...imgs)
     await room.save()
+    if(req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename)
+        }
+        await room.updateOne({$pull: {images: {filename: { $in: req.body.deleteImages }}}})
+    }
     req.flash('success', 'Successfully updated room')
     res.redirect(`/rooms/${room._id}`)
 }
