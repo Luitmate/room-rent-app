@@ -16,6 +16,17 @@ const RoomSchema = new Schema({
     price: Number,
     description: String,
     images: [ImageSchema],
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     location: String,
     author : {
         type: Schema.Types.ObjectId,

@@ -15,7 +15,12 @@ module.exports.renderNewForm = (req, res) => {
 }
 
 module.exports.createRoom = async (req, res, next) => {
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.room.location,
+        limit: 1
+    }).send()
     const room = new Room(req.body.room)
+    room.geometry = geoData.body.features[0].geometry
     room.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
     room.author = req.user._id
     await room.save()
