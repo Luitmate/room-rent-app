@@ -11,6 +11,8 @@ ImageSchema.virtual('thumbnail').get(function() {
     return this.url.replace('/upload', '/upload/w_200')
 })
 
+const opts = { toJSON: { virtuals: true } };
+
 const RoomSchema = new Schema({
     title: String,
     price: Number,
@@ -36,7 +38,11 @@ const RoomSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Review'
     }]
-})
+}, opts)
+
+RoomSchema.virtual('properties.popUpMarkup').get(function() {
+    return `<strong><a href="/rooms/${this._id}">${this.title}</a></strong>`
+});
 
 RoomSchema.post('findOneAndDelete', async function(doc) {
     if(doc) {
@@ -50,3 +56,4 @@ RoomSchema.post('findOneAndDelete', async function(doc) {
 
 
 module.exports = mongoose.model('Room', RoomSchema)
+
