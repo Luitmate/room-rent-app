@@ -11,6 +11,7 @@ const flash = require('connect-flash')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./models/user')
+const helmet = require('helmet')
 
 const ExpressError = require('./utils/ExpressError')
 const methodOverride = require('method-override')
@@ -57,6 +58,7 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 app.use(flash())
+app.use(helmet({ contentSecurityPolicy: false}))
 
 // PASSPORT CONFIG
 app.use(passport.initialize())
