@@ -6,6 +6,8 @@ mapboxgl.accessToken = mapToken;
   zoom: 9 // starting zoom
 });
 
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
 new mapboxgl.Marker()
     .setLngLat(room.geometry.coordinates)
     .setPopup(
