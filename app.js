@@ -2,6 +2,8 @@ if(process.env.NODE_ENV !=="production") {
     require('dotenv').config()
 }
 
+
+
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
@@ -22,10 +24,15 @@ const reviewsRoutes = require('./routes/reviews')
 const userRoutes = require('./routes/users')
 
 
+const MongoStore = require('connect-mongo');
+
+const dbUrl = 'mongodb://localhost:27017/room-rent'
+// await mongoose.connect(dbUrl);
+
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/room-rent');
+  await mongoose.connect(dbUrl);
 }
 
 const app = express()
@@ -44,7 +51,18 @@ app.use(methodOverride('_method'))
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    secret: 'thisismysecret',
+    touchAfter: 24 * 60 * 60
+});
+
+store.on('error', function(e) {
+    console.log('session store error', e)
+})
+
 const sessionConfig = {
+    store,
     name: 'roomSession',
     secret: 'thisismysecret',
     resave: false,
